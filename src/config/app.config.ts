@@ -13,9 +13,6 @@ const configSchema = z.object({
   MONGO_URI: z.string().min(1),
   JWT_SECRET: z.string().min(32),
   JWT_EXPIRE: z.string().default("1d"),
-  CLOUDINARY_CLOUD_NAME: z.string().min(1),
-  CLOUDINARY_API_KEY: z.string().min(1),
-  CLOUDINARY_API_SECRET: z.string().min(1),
   UPLOAD_LIMIT: z.coerce.number().default(5), // Max number of images
   FILE_SIZE_LIMIT: z.coerce.number().default(5 * 1024 * 1024), // 5MB
   LOG_LEVEL: z.enum(["error", "warn", "info", "debug"]).default("info"),
@@ -29,9 +26,6 @@ const config = {
   MONGO_URI: process.env.MONGO_URI,
   JWT_SECRET: process.env.JWT_SECRET,
   JWT_EXPIRE: process.env.JWT_EXPIRE,
-  CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
-  CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
-  CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
   UPLOAD_LIMIT: process.env.UPLOAD_LIMIT,
   FILE_SIZE_LIMIT: process.env.FILE_SIZE_LIMIT,
   LOG_LEVEL: process.env.LOG_LEVEL,
@@ -66,14 +60,6 @@ export const dbConfig = {
 export const jwtConfig = {
   secret: envConfig.JWT_SECRET,
   expiresIn: envConfig.JWT_EXPIRE,
-};
-
-// Cloudinary configuration
-export const cloudinaryConfig = {
-  cloudName: envConfig.CLOUDINARY_CLOUD_NAME,
-  apiKey: envConfig.CLOUDINARY_API_KEY,
-  apiSecret: envConfig.CLOUDINARY_API_SECRET,
-  folder: "products",
 };
 
 // File upload configuration

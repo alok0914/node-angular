@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import Product from '../models/product';
-import CloudinaryService from '../services/cloudinary.service';
 import { IProduct } from '../models/product';
 import { Types } from 'mongoose';
 
@@ -17,19 +16,6 @@ class ProductController {
       if (!name || !description || !price || !category || !stock) {
         return res.status(400).json({ message: 'All fields are required' });
       }
-
-      // Upload images to Cloudinary (max 5)
-      const files = req.files;
-      if (files.length > 5) {
-        return res.status(400).json({ message: 'Maximum 5 images allowed' });
-      }
-
-      const imageUrls: string[] = [];
-      for (const file of files) {
-        const result = await CloudinaryService.uploadImage(file);
-        imageUrls.push(result.secure_url);
-      }
-
       // Create product
       const product = new Product({
         name,
@@ -37,7 +23,6 @@ class ProductController {
         price: Number(price),
         category,
         stock: Number(stock),
-        images: imageUrls,
       });
 
       await product.save();

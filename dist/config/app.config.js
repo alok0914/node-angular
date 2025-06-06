@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loggerConfig = exports.serverConfig = exports.corsConfig = exports.uploadConfig = exports.cloudinaryConfig = exports.jwtConfig = exports.dbConfig = exports.envConfig = void 0;
+exports.loggerConfig = exports.serverConfig = exports.corsConfig = exports.uploadConfig = exports.jwtConfig = exports.dbConfig = exports.envConfig = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const path_1 = __importDefault(require("path"));
 const zod_1 = require("zod");
@@ -18,9 +18,6 @@ const configSchema = zod_1.z.object({
     MONGO_URI: zod_1.z.string().min(1),
     JWT_SECRET: zod_1.z.string().min(32),
     JWT_EXPIRE: zod_1.z.string().default("1d"),
-    CLOUDINARY_CLOUD_NAME: zod_1.z.string().min(1),
-    CLOUDINARY_API_KEY: zod_1.z.string().min(1),
-    CLOUDINARY_API_SECRET: zod_1.z.string().min(1),
     UPLOAD_LIMIT: zod_1.z.coerce.number().default(5), // Max number of images
     FILE_SIZE_LIMIT: zod_1.z.coerce.number().default(5 * 1024 * 1024), // 5MB
     LOG_LEVEL: zod_1.z.enum(["error", "warn", "info", "debug"]).default("info"),
@@ -33,9 +30,6 @@ const config = {
     MONGO_URI: process.env.MONGO_URI,
     JWT_SECRET: process.env.JWT_SECRET,
     JWT_EXPIRE: process.env.JWT_EXPIRE,
-    CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
-    CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
-    CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
     UPLOAD_LIMIT: process.env.UPLOAD_LIMIT,
     FILE_SIZE_LIMIT: process.env.FILE_SIZE_LIMIT,
     LOG_LEVEL: process.env.LOG_LEVEL,
@@ -62,13 +56,6 @@ exports.dbConfig = {
 exports.jwtConfig = {
     secret: exports.envConfig.JWT_SECRET,
     expiresIn: exports.envConfig.JWT_EXPIRE,
-};
-// Cloudinary configuration
-exports.cloudinaryConfig = {
-    cloudName: exports.envConfig.CLOUDINARY_CLOUD_NAME,
-    apiKey: exports.envConfig.CLOUDINARY_API_KEY,
-    apiSecret: exports.envConfig.CLOUDINARY_API_SECRET,
-    folder: "products",
 };
 // File upload configuration
 exports.uploadConfig = {

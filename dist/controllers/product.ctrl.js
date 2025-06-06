@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const product_1 = __importDefault(require("../models/product"));
-const cloudinary_service_1 = __importDefault(require("../services/cloudinary.service"));
 const mongoose_1 = require("mongoose");
 class ProductController {
     async createProduct(req, res) {
@@ -14,16 +13,6 @@ class ProductController {
             if (!name || !description || !price || !category || !stock) {
                 return res.status(400).json({ message: 'All fields are required' });
             }
-            // Upload images to Cloudinary (max 5)
-            const files = req.files;
-            if (files.length > 5) {
-                return res.status(400).json({ message: 'Maximum 5 images allowed' });
-            }
-            const imageUrls = [];
-            for (const file of files) {
-                const result = await cloudinary_service_1.default.uploadImage(file);
-                imageUrls.push(result.secure_url);
-            }
             // Create product
             const product = new product_1.default({
                 name,
@@ -31,7 +20,6 @@ class ProductController {
                 price: Number(price),
                 category,
                 stock: Number(stock),
-                images: imageUrls,
             });
             await product.save();
             return res.status(201).json(product);
