@@ -1,10 +1,11 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, ObjectId, Schema } from 'mongoose';
 
 export interface INotes extends Document {
   name: string;
   content: string;
   createdAt: Date;
   updatedAt: Date;
+  _id: ObjectId 
 }
 
 const NoteSchema: Schema = new Schema(

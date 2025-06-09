@@ -78,10 +78,11 @@ class NotesController {
 //   }
 
   async updateNote(req:any, res:any): Promise<any> {
+    console.log('sdkjcbjkscbjkcbjksdc');
     try {
       const { id } = req.params;
       const { name, content } = req.body;
-      
+      console.log('sdcsd', Types.ObjectId.isValid(id))
       if (!Types.ObjectId.isValid(id)) {
         return res.status(400).json({ message: 'Invalid note ID' });
       }
@@ -105,6 +106,7 @@ class NotesController {
   }
 
   async deleteNote(req: Request, res: Response): Promise<any> {
+     console.log('in dleete');
     try {
       const { id } = req.params;
       

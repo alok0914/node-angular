@@ -65,9 +65,11 @@ class NotesController {
     //     }
     //   }
     async updateNote(req, res) {
+        console.log('sdkjcbjkscbjkcbjksdc');
         try {
             const { id } = req.params;
             const { name, content } = req.body;
+            console.log('sdcsd', mongoose_1.Types.ObjectId.isValid(id));
             if (!mongoose_1.Types.ObjectId.isValid(id)) {
                 return res.status(400).json({ message: 'Invalid note ID' });
             }
@@ -87,6 +89,7 @@ class NotesController {
         }
     }
     async deleteNote(req, res) {
+        console.log('in dleete');
         try {
             const { id } = req.params;
             if (!mongoose_1.Types.ObjectId.isValid(id)) {

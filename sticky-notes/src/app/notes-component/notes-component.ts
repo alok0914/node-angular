@@ -1,19 +1,23 @@
-import { Component,  OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NotesService } from '../../service/notes-service';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-notes-component',
-  imports: [ReactiveFormsModule, CommonModule ],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './notes-component.html',
   styleUrl: './notes-component.scss',
 })
-export class NotesComponent implements OnInit {
-  allNotes: Array<{ name: ''; content: ''; }> = [];
-  constructor(private notesSrc: NotesService) {   }
+export class NotesComponent implements OnInit, OnChanges {
+  allNotes: Array<{ _id: ''; name: ''; content: ''; }> = [];
+  constructor(private notesSrc: NotesService, private changeDetection: ChangeDetectorRef) { }
   ngOnInit(): void {
     this.getNotes();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('sdjcbjkscsdc', this.allNotes, changes)
   }
 
 
@@ -25,11 +29,29 @@ export class NotesComponent implements OnInit {
   getNotes() {
     this.notesSrc.getNotes().subscribe(notes => {
       this.allNotes = notes?.notes;
-       console.log('allnotes === ', this.allNotes);
     });
   }
 
   submitNote() {
-    this.notesSrc.createNotes(this.noteForm.value);
+    this.notesSrc.createNotes(this.noteForm.value).subscribe((newItem: any) => {
+      console.log('before==', this.allNotes)
+      this.allNotes = [...this.allNotes, newItem];
+      console.log('after==', this.allNotes);
+      this.changeDetection.detectChanges()
+    });;
+  }
+
+  trackByFn(index: number, item: any): any {
+      return item._id;
+    }
+
+  editNote(data: {}) {
+    this.notesSrc.updateNote(data);
+  }
+
+  deleteNote(data: any) {
+    this.notesSrc.deleteNote(data).subscribe(()=> {
+      this.allNotes = this.allNotes.filter(note => note?._id !== data?._id);
+    });
   }
 }
