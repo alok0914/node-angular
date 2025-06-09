@@ -7,6 +7,7 @@ const notes_1 = __importDefault(require("../models/notes"));
 const mongoose_1 = require("mongoose");
 class NotesController {
     async createNote(req, res) {
+        console.log('req', req.body);
         try {
             const { name, content } = req.body;
             // Validate input

@@ -8,6 +8,7 @@ interface IProductRequest extends Request {
 
 class NotesController {
   async createNote(req: IProductRequest, res:any): Promise<any> {
+    console.log('req', req.body)
     try {
       const { name, content } = req.body;
       

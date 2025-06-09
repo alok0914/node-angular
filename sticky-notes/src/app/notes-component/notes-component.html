@@ -1,1 +1,13 @@
-<p>notes-component works!</p>
+<form [formGroup]="noteForm" (ngSubmit)="submitNote()">
+    <label for="first-name">Note Name: </label>
+    <input id="first-name" type="text" formControlName="name" />
+    <br>
+    <label for="last-name">Note Content: </label>
+    <input id="last-name" type="text" formControlName="content" />
+    <br>
+    <button type="submit" [disabled]="!noteForm.valid">Submit</button>
+</form>
+<ng-container *ngIf="allNotes">
+    <div *ngFor="let note of allNotes">Name: {{note.name}} - Content: {{note.content}}
+    </div>
+</ng-container>

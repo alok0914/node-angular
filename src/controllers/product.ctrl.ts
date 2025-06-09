@@ -9,6 +9,7 @@ interface IProductRequest extends Request {
 
 class ProductController {
   async createProduct(req: IProductRequest, res:any): Promise<any> {
+    console.log('product req', req.body)
     try {
       const { name, description, price, category, stock } = req.body;
       

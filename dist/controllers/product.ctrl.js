@@ -7,6 +7,7 @@ const product_1 = __importDefault(require("../models/product"));
 const mongoose_1 = require("mongoose");
 class ProductController {
     async createProduct(req, res) {
+        console.log('product req', req.body);
         try {
             const { name, description, price, category, stock } = req.body;
             // Validate input

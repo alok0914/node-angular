@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { NotesComponent } from './notes-component/notes-component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [NotesComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
-  protected title = 'sticky-notes';
-}
+export class App { }

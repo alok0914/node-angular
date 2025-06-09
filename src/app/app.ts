@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import { serverConfig } from '../config/app.config';
 import { connectDB } from '../config/database';
 import productRoutes from '../routes/product.routes'
+import noteRoutes from '../routes/note.routes'
 import authRoutes from '../routes/auth.routes';
 
 const app = express();
@@ -14,13 +15,14 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan(serverConfig.isProduction ? 'combined' : 'dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 // Database connection
 connectDB();
 
 // // Routes
 app.use('/api/products', productRoutes);
+app.use('/api/notes', noteRoutes);
  app.use('/api/auth', authRoutes);
 
 // Health check
