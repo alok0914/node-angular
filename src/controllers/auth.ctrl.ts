@@ -7,7 +7,6 @@ class AuthController {
   async register(req: Request, res: Response):Promise<any> {
     try {
       const { name, email, password, role } = req.body;
-      console.log("in register route...")
       
       // Check if user exists
       const existingUser = await User.findOne({ email });

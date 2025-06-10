@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NotesService } from '../../service/notes-service';
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './notes-component.html',
   styleUrl: './notes-component.scss',
 })
-export class NotesComponent implements OnInit, OnChanges {
+export class NotesComponent implements OnInit {
   allNotes: Array<{ _id: ''; name: ''; content: ''; }> = [];
   isEditMode: boolean = false;
   editData: any;
@@ -17,11 +17,6 @@ export class NotesComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.getNotes();
   }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('sdjcbjkscsdc', this.allNotes, changes)
-  }
-
 
   noteForm = new FormGroup({
     name: new FormControl('', Validators.required),
