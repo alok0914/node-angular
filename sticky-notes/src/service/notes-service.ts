@@ -22,8 +22,7 @@ export class NotesService {
   }
 
   updateNote(note: any): Observable<any> {
-    console.log('editNote', note);
-    return this.http.put('http://localhost:5000/api/notes', note)
+    return this.http.put('http://localhost:5000/api/notes/' + note._id, note)
   }
 
   deleteNote(note: any): Observable<any> {

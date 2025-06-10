@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 export class NotesComponent implements OnInit, OnChanges {
   allNotes: Array<{ _id: ''; name: ''; content: ''; }> = [];
   isEditMode: boolean = false;
-  editData: Array<{ _id: ''; name: ''; content: ''; }> = [];
+  editData: any;
   constructor(private notesSrc: NotesService, private changeDetection: ChangeDetectorRef) { }
   ngOnInit(): void {
     this.getNotes();
@@ -36,10 +36,11 @@ export class NotesComponent implements OnInit, OnChanges {
 
   submitNote() {
     if (this.isEditMode) {
+      this.editData.name = this.noteForm.value.name;
+      this.editData.content = this.noteForm.value.content;
       this.notesSrc.updateNote(this.editData).subscribe((editData: any) => {
-        console.log('editData', editData)
-        // this.allNotes = this.allNotes.filter(note => note?._id !== data?._id);
-        // this.changeDetection.markForCheck();
+        this.isEditMode = false;
+        this.editData = {};
         this.noteForm.reset();
       });;;
     } else {
