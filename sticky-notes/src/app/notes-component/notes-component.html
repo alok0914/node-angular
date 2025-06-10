@@ -5,7 +5,7 @@
     <label for="last-name">Note Content: </label>
     <input id="last-name" type="text" formControlName="content" />
     <br>
-    <button type="submit" [disabled]="!noteForm.valid">Submit</button>
+    <button type="submit" [disabled]="!noteForm.valid">{{ isEditMode ? 'Update' : 'Submit' }}</button>
 </form>
 <ng-container *ngIf="allNotes">
     <div *ngFor="let note of allNotes">Name: {{note.name}} - Content: {{note.content}}

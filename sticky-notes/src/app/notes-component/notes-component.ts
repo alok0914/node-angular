@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
 })
 export class NotesComponent implements OnInit, OnChanges {
   allNotes: Array<{ _id: ''; name: ''; content: ''; }> = [];
+  isEditMode: boolean = false;
+  editData: Array<{ _id: ''; name: ''; content: ''; }> = [];
   constructor(private notesSrc: NotesService, private changeDetection: ChangeDetectorRef) { }
   ngOnInit(): void {
     this.getNotes();
@@ -33,15 +35,27 @@ export class NotesComponent implements OnInit, OnChanges {
   }
 
   submitNote() {
-    this.notesSrc.createNotes(this.noteForm.value).subscribe((newItem: any) => {
-      this.allNotes = [...this.allNotes, newItem];
-      this.changeDetection.markForCheck();
-      this.noteForm.reset();
-    });;
+    if (this.isEditMode) {
+      this.notesSrc.updateNote(this.editData).subscribe((editData: any) => {
+        console.log('editData', editData)
+        // this.allNotes = this.allNotes.filter(note => note?._id !== data?._id);
+        // this.changeDetection.markForCheck();
+        this.noteForm.reset();
+      });;;
+    } else {
+      this.notesSrc.createNotes(this.noteForm.value).subscribe((newItem: any) => {
+        this.allNotes = [...this.allNotes, newItem];
+        this.changeDetection.markForCheck();
+        this.noteForm.reset();
+      });
+    }
+
   }
 
-  editNote(data: {}) {
-    this.notesSrc.updateNote(data);
+  editNote(data: any) {
+    this.isEditMode = true;
+    this.editData = data;
+    this.noteForm.patchValue({ name: data.name, content: data.content });
   }
 
   deleteNote(data: any) {
