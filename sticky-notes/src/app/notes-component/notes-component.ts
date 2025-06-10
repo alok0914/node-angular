@@ -34,24 +34,20 @@ export class NotesComponent implements OnInit, OnChanges {
 
   submitNote() {
     this.notesSrc.createNotes(this.noteForm.value).subscribe((newItem: any) => {
-      console.log('before==', this.allNotes)
       this.allNotes = [...this.allNotes, newItem];
-      console.log('after==', this.allNotes);
-      this.changeDetection.detectChanges()
+      this.changeDetection.markForCheck();
+      this.noteForm.reset();
     });;
   }
-
-  trackByFn(index: number, item: any): any {
-      return item._id;
-    }
 
   editNote(data: {}) {
     this.notesSrc.updateNote(data);
   }
 
   deleteNote(data: any) {
-    this.notesSrc.deleteNote(data).subscribe(()=> {
+    this.notesSrc.deleteNote(data).subscribe(() => {
       this.allNotes = this.allNotes.filter(note => note?._id !== data?._id);
+      this.changeDetection.markForCheck();
     });
   }
 }
